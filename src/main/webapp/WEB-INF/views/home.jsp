@@ -2,14 +2,20 @@
 <%@ page session="false" %>
 <html>
   <head>
-    <title>Spittr</title>
+    <title>Blog</title>
+    <link rel="stylesheet"
+              type="text/css"
+              href="<c:url value="/resources/bootstrap.min.css" />" >
+    <link rel="stylesheet"
+              type="text/css"
+              href="<c:url value="/resources/bootstrap-theme.min.css" />" >
     <link rel="stylesheet"
           type="text/css"
           href="<c:url value="/resources/style.css" />" >
   </head>
   <body>
-    <h1>Welcome to Spittr</h1>
-    <a href="<c:url value="/spittles" />">Spittles</a> |
-    <a href="<c:url value="/spitter/register" />">Register</a>
+    <h1>Welcome to my blog</h1>
+    <a href="<c:url value="/posts" />">Posts</a>
+    <
   </body>
 </html>
