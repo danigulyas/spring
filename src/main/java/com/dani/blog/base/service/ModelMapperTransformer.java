@@ -28,10 +28,12 @@ public class ModelMapperTransformer<E, D> implements Transformer<E, D> {
     }
 
     public E fromDto(D dto) {
+        if(dto == null) return null;
         return mapper.map(dto, entityClazz);
     }
 
     public D fromEntity(E entity) {
+        if(entity == null) return null;
         return mapper.map(entity, dtoClazz);
     }
 }

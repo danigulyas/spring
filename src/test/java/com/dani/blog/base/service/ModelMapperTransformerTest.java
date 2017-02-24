@@ -1,9 +1,10 @@
 package com.dani.blog.base.service;
 
-import lombok.*;
+import com.dani.blog.base.service.stub.TestDto;
+import com.dani.blog.base.service.stub.TestEntity;
+import com.dani.blog.base.service.stub.TestTransformer;
 import org.junit.Before;
 import org.junit.Test;
-import org.modelmapper.ModelMapper;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -37,13 +38,6 @@ public class ModelMapperTransformerTest {
 
         assertEquals("Has the same id.", dto.getId(), result.getId());
         assertEquals("Has the same field.", dto.getTest(), result.getTest());
-    }
-
-
-    class TestTransformer extends ModelMapperTransformer<TestEntity, TestDto> {
-        public TestTransformer() {
-            super(new ModelMapper());
-        }
     }
 }
 

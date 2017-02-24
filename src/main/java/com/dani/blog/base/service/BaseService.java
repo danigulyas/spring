@@ -16,11 +16,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @param <D> DTO
  * @param <I> Identifier
  */
-public class AbstractBaseService<E, D, I extends Serializable> implements Service<E, D, I> {
+public class BaseService<E, D, I extends Serializable> implements Service<E, D, I> {
     protected final Transformer<E, D> transformer;
     protected final DAO<E, I> repository;
 
-    public AbstractBaseService(DAO<E, I> repository, Transformer<E, D> transformer) {
+    public BaseService(DAO<E, I> repository, Transformer<E, D> transformer) {
         checkNotNull(repository);
         checkNotNull(transformer);
 
@@ -45,7 +45,7 @@ public class AbstractBaseService<E, D, I extends Serializable> implements Servic
      * @param id
      */
     public void delete(I id) {
-        E entity = repository.findById(id);
+        repository.delete(id);
     }
 
 

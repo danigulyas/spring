@@ -1,6 +1,8 @@
-package com.dani.blog.base.service;
+package com.dani.blog.base.service.stub;
 
 import lombok.*;
+
+import java.io.Serializable;
 
 /**
  * @author dani
@@ -9,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
-public class TestDto {
+public class TestDto implements Serializable {
     private Long id;
     private String test;
 }

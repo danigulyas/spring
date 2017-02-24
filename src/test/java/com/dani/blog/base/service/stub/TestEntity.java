@@ -1,4 +1,4 @@
-package com.dani.blog.base.service;
+package com.dani.blog.base.service.stub;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
