@@ -2,14 +2,15 @@ package com.dani.blog.web;
 
 import com.dani.blog.domain.Comment;
 import com.dani.blog.domain.comment.CommentService;
+import com.dani.blog.web.dto.CreateCommentDto;
 import com.dani.blog.web.support.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.swing.text.html.parser.Entity;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -44,6 +45,29 @@ public class CommentController {
         } catch(IllegalStateException ise) {
             throw new EntityNotFoundException();
         }
+    }
+
+    /**
+     * Deletes a comment from the post's context if the comment referenced belongs to the given post.
+     * @param postId
+     * @param commentId
+     */
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable("postId") long postId, @PathVariable("id") long commentId) {
+        try {
+            final Comment comment = service.findByIdAndPostId(postId, commentId);
+
+            if(comment == null) throw new EntityNotFoundException();
+
+            service.delete(comment.getId());
+        } catch(IllegalStateException ise) {
+            throw new EntityNotFoundException();
+        }
+    }
+
+    @PostMapping
+    public Comment create(@Valid CreateCommentDto dto) {
+        //TODO: make service receive CreateCommentDto then pass it to service
     }
 
     /**

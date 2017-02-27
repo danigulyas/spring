@@ -13,4 +13,5 @@ import java.util.List;
 public interface CommentRepository extends DAO<CommentEntity, Long> {
     List<CommentEntity> findAll();
     List<CommentEntity> findAllByPostId(long id);
+    CommentEntity findOneByIdAndPostId(long id, long postId);
 }
