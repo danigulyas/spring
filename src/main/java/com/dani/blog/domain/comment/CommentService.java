@@ -4,10 +4,13 @@ import com.dani.blog.base.service.BaseService;
 import com.dani.blog.data.CommentRepository;
 import com.dani.blog.domain.Comment;
 import com.dani.blog.domain.Post;
+import com.dani.blog.domain.comment.request.CreateCommentRequest;
+import com.dani.blog.domain.post.PostEntity;
 import com.dani.blog.domain.post.PostService;
 import javassist.NotFoundException;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,21 @@ public class CommentService extends BaseService<CommentEntity, Comment, Long> {
 
         checkNotNull(postService);
         this.postService = postService;
+    }
+
+    /**
+     * Creates a comment.
+     * @param req
+     * @return
+     */
+    public Comment create(@Valid CreateCommentRequest req) {
+        Post post = postService.find(req.getPostId());
+        Comment draft = new Comment();
+
+        draft.setContent(req.getContent());
+        draft.setPost(post);
+
+        return transformer.fromEntity(repository.save(transformer.fromDto(draft)));
     }
 
     public List<Comment> findAllByPostId(long id) {
@@ -61,5 +79,9 @@ public class CommentService extends BaseService<CommentEntity, Comment, Long> {
 
     private CommentRepository getRepository() {
         return (CommentRepository) repository;
+    }
+
+    private CommentTransformer getTransformer() {
+        return (CommentTransformer) transformer;
     }
 }

@@ -21,17 +21,11 @@ public class PostEntity {
 
     @Column
     @NotNull
-    @Size(min = 1, max = 20)
-    private String name;
-
-    @Column
-    @NotNull
-    @Size(min = 1, max = 500000)
+    @Size(min = 1, max = 200)
     private String content;
 
     public PostEntity(String name, String content) {
         this.id = null;
-        this.name = name;
         this.content = content;
     }
 }

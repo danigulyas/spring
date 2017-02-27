@@ -2,14 +2,12 @@ package com.dani.blog.web;
 
 import com.dani.blog.domain.Comment;
 import com.dani.blog.domain.comment.CommentService;
-import com.dani.blog.web.dto.CreateCommentDto;
+import com.dani.blog.domain.comment.request.CreateCommentRequest;
 import com.dani.blog.web.support.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class CommentController {
     public List<Comment> getAll(@PathVariable("postId") long postId) {
         try {
             final List<Comment> comments = service.findAllByPostId(postId);
-            if(comments == null) throw new EntityNotFoundException();
+            if(comments.isEmpty()) throw new EntityNotFoundException();
 
             return comments;
         } catch(IllegalStateException ise) {
@@ -65,12 +63,15 @@ public class CommentController {
         }
     }
 
-    @PostMapping
-    public Comment create(@Valid CreateCommentDto dto) {
-        //TODO: make service receive CreateCommentDto then pass it to service
-    }
-
     /**
-     * TODO: add create, delete POST /posts/{id}/comments/, DELETE /posts/{id}/comments/{commentId}
+     * This is double work ({@link Valid} is used at {@link CommentService} as well), this is a trade of performance
+     * for convenience, this way we don't have to figure out how to pass the errors to the presentation layer,
+     * Spring already helps with that.
+     * @param dto is the converted pojo.
+     * @return the created comment.
      */
+    @PostMapping
+    public Comment create(@Valid @RequestBody CreateCommentRequest dto) {
+        return service.create(dto);
+    }
 }
