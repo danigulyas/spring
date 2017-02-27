@@ -8,6 +8,7 @@ import com.dani.blog.domain.comment.request.CreateCommentRequest;
 import com.dani.blog.domain.post.PostEntity;
 import com.dani.blog.domain.post.PostService;
 import javassist.NotFoundException;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author dani
  */
+@Service
 public class CommentService extends BaseService<CommentEntity, Comment, Long> {
     private final PostService postService;
 
@@ -35,8 +37,8 @@ public class CommentService extends BaseService<CommentEntity, Comment, Long> {
      * @param req
      * @return
      */
-    public Comment create(@Valid CreateCommentRequest req) {
-        Post post = postService.find(req.getPostId());
+    public Comment create(@Valid CreateCommentRequest req, long postId) {
+        Post post = getPostById(postId);
         Comment draft = new Comment();
 
         draft.setContent(req.getContent());

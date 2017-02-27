@@ -8,6 +8,11 @@
   <name>spring-app</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <spring.version>4.3.6.RELEASE</spring.version>
+    <log4j.version>2.8</log4j.version>
+  </properties>
+
   <dependencies>
 
     <!-- General -->
@@ -48,6 +53,21 @@
       <version>0.7.7</version>
     </dependency>
 
+    <!-- Logging -->
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-jcl</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+
+
 
     <!-- Java EE -->
 
@@ -82,13 +102,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>4.3.6.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>4.3.6.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <dependency>

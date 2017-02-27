@@ -15,7 +15,7 @@ import java.util.List;
  * @author dani
  */
 @RestController
-@RequestMapping("/post/{postId}/comments")
+@RequestMapping("/posts/{postId}/comments")
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class CommentController {
     private final CommentService service;
@@ -71,7 +71,7 @@ public class CommentController {
      * @return the created comment.
      */
     @PostMapping
-    public Comment create(@Valid @RequestBody CreateCommentRequest dto) {
-        return service.create(dto);
+    public Comment create(@Valid @RequestBody CreateCommentRequest dto, @PathVariable long postId) {
+        return service.create(dto, postId);
     }
 }

@@ -1,13 +1,12 @@
 package com.dani.blog.base.service;
 
 import com.dani.blog.base.data.DAO;
-import com.dani.blog.base.service.stub.TestDto;
-import com.dani.blog.base.service.stub.TestEntity;
-import com.dani.blog.base.service.stub.TestService;
-import com.dani.blog.base.service.stub.TestTransformer;
+import com.dani.blog.base.service.support.TestDto;
+import com.dani.blog.base.service.support.TestEntity;
+import com.dani.blog.base.service.support.TestService;
+import com.dani.blog.base.service.support.TestTransformer;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

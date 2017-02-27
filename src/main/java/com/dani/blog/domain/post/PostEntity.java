@@ -1,6 +1,7 @@
 package com.dani.blog.domain.post;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,14 +13,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Data
+@Getter
 @NoArgsConstructor
 public class PostEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column
     @NotNull
     @Size(min = 1, max = 200)
     private String content;

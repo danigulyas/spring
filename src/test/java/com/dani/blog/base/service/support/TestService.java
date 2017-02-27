@@ -1,4 +1,4 @@
-package com.dani.blog.base.service.stub;
+package com.dani.blog.base.service.support;
 
 import com.dani.blog.base.data.DAO;
 import com.dani.blog.base.service.BaseService;

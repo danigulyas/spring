@@ -18,10 +18,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class CommentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
-    @Column
     @NotNull
     @Size(min = 1, max = 200)
     private String content;

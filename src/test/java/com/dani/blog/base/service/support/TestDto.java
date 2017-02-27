@@ -1,4 +1,4 @@
-package com.dani.blog.base.service.stub;
+package com.dani.blog.base.service.support;
 
 import lombok.*;
 
