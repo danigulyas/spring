@@ -11,5 +11,4 @@ import java.util.List;
  */
 @Repository
 public interface PostRepository extends CrudRepository<PostEntity, Long> {
-    List<PostEntity> findAll();
 }

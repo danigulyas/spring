@@ -29,8 +29,6 @@ public class CommentController {
             return comments;
         } catch(IllegalStateException ise) {
             throw new EntityNotFoundException();
-        } catch(EntityNotFoundException nfe) {
-            throw nfe;
         }
     }
 

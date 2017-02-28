@@ -13,10 +13,8 @@ import java.util.List;
  */
 @Repository
 public interface CommentRepository extends CrudRepository<CommentEntity, Long> {
-    List<CommentEntity> findAll();
     List<CommentEntity> findAllByPostId(long id);
     CommentEntity findOneByIdAndPostId(long id, long postId);
-
 
     @EntityGraph(attributePaths = {"post"})
     List<CommentEntity> readAllByPostId(long id);

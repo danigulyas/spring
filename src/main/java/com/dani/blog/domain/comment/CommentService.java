@@ -8,6 +8,7 @@ import com.dani.blog.domain.comment.request.CreateCommentRequest;
 import com.dani.blog.domain.post.PostService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -62,11 +63,9 @@ public class CommentService extends BaseCrudService<CommentEntity, Comment, Long
         CommentEntity entity = repository.findById(id);
         Comment comment = transformer.fromEntity(entity);
 
-        if(comment == null)
-            throw new IllegalStateException("Comment with id #" + id + " not found.");
-
-        if(comment.getPost().getId() != postId)
-            throw new IllegalStateException("Comment #" + id + " doesn't belong to post #" + postId);
+        Assert.notNull(comment, "Comment with id #" + id + " not found.");
+        Assert.isTrue(comment.getPost().getId() == postId,
+                "The comment referenced by the id doesn't belong to the post.");
 
         return comment;
     }
@@ -76,7 +75,7 @@ public class CommentService extends BaseCrudService<CommentEntity, Comment, Long
 
         Post post = postService.find(id);
 
-        if(post == null) throw new IllegalStateException("Couldn't find post with id #" + id);
+        Assert.notNull(post, "Post with id #" + id + " not found.");
 
         return post;
     }
