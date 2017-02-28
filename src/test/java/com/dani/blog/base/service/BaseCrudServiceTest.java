@@ -50,7 +50,7 @@ public class BaseCrudServiceTest {
     public void testFindById() {
         final Long id = 0L;
         final TestEntity entity = new TestEntity(id, "a");
-        when(repository.findById(0L)).thenReturn(entity);
+        when(repository.findOne(0L)).thenReturn(entity);
 
         TestDto result = service.find(id);
 
@@ -61,7 +61,7 @@ public class BaseCrudServiceTest {
     @Test
     public void testFindByIdWithNull() {
         final Long id = 13L;
-        when(repository.findById(id)).thenReturn(null);
+        when(repository.findOne(id)).thenReturn(null);
 
         TestDto result = service.find(id);
 

@@ -24,12 +24,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Transactional
 public class CommentService extends BaseCrudService<CommentEntity, Comment, Long> {
     private final PostService postService;
+    protected final CommentRepository repository;
 
     @Inject
     public CommentService(CommentRepository repository, CommentTransformer transformer, PostService postService) {
-        super(repository, transformer);
+        super(transformer);
 
         checkNotNull(postService);
+        checkNotNull(repository);
+
+        this.repository = repository;
         this.postService = postService;
     }
 
@@ -45,7 +49,7 @@ public class CommentService extends BaseCrudService<CommentEntity, Comment, Long
         draft.setContent(req.getContent());
         draft.setPost(post);
 
-        return transformer.fromEntity(repository.save(transformer.fromDto(draft)));
+        return transformer.fromEntity(getRepository().save(transformer.fromDto(draft)));
     }
 
     public List<Comment> findAllByPostId(long id) {
@@ -60,7 +64,7 @@ public class CommentService extends BaseCrudService<CommentEntity, Comment, Long
 
     @Transactional
     public Comment findByIdAndPostId(long id, long postId) {
-        CommentEntity entity = repository.findById(id);
+        CommentEntity entity = getRepository().findOne(id);
         Comment comment = transformer.fromEntity(entity);
 
         Assert.notNull(comment, "Comment with id #" + id + " not found.");
@@ -80,11 +84,11 @@ public class CommentService extends BaseCrudService<CommentEntity, Comment, Long
         return post;
     }
 
-    private CommentRepository getRepository() {
-        return (CommentRepository) repository;
+    protected CommentRepository getRepository() {
+        return repository;
     }
 
-    private CommentTransformer getTransformer() {
-        return (CommentTransformer) transformer;
+    protected CommentTransformer getTransformer() {
+        return (CommentTransformer) this.transformer;
     }
 }

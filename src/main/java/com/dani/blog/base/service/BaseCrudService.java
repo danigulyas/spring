@@ -15,28 +15,24 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @param <D> DTO
  * @param <I> Identifier
  */
-public class BaseCrudService<E, D, I extends Serializable> implements CrudService<E, D, I> {
+public abstract class BaseCrudService<E, D, I extends Serializable> implements CrudService<E, D, I> {
     protected final Transformer<E, D> transformer;
-    protected final CrudRepository<E, I> repository;
 
-    public BaseCrudService(CrudRepository<E, I> repository, Transformer<E, D> transformer) {
-        checkNotNull(repository);
+    public BaseCrudService(Transformer<E, D> transformer) {
         checkNotNull(transformer);
-
-        this.repository = repository;
         this.transformer = transformer;
     }
 
     public List<D> findAll() {
-        return repository.findAll().stream().map(transformer::fromEntity).collect(Collectors.toList());
+        return getRepository().findAll().stream().map(transformer::fromEntity).collect(Collectors.toList());
     }
 
     public D find(I id) {
-        return transformer.fromEntity(repository.findById(id));
+        return transformer.fromEntity(getRepository().findOne(id));
     }
 
     public D create(D draft) {
-        return transformer.fromEntity(repository.save(transformer.fromDto(draft)));
+        return transformer.fromEntity(getRepository().save(transformer.fromDto(draft)));
     }
 
     /**
@@ -44,8 +40,8 @@ public class BaseCrudService<E, D, I extends Serializable> implements CrudServic
      * @param id
      */
     public void delete(I id) {
-        repository.delete(id);
+        getRepository().delete(id);
     }
 
-
+    protected abstract CrudRepository<E, I> getRepository();
 }

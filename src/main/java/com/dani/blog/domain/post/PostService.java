@@ -9,20 +9,30 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * @author dani
  */
 @Service
 public class PostService extends BaseCrudService<PostEntity, Post, Long> {
+    protected final PostRepository repository;
 
     @Inject
     public PostService(PostRepository repository, PostTransformer transformer) {
-        super(repository, transformer);
+        super(transformer);
+
+        checkNotNull(repository);
+        this.repository = repository;
     }
 
     public Post create(@Valid CreatePostRequest req) {
         PostEntity entity = new PostEntity(req.getName(), req.getContent());
 
         return transformer.fromEntity(repository.save(entity));
+    }
+
+    protected PostRepository getRepository() {
+        return repository;
     }
 }
