@@ -11,6 +11,4 @@ import java.util.List;
  * @param <I> identifier
  */
 public interface CrudRepository<E, I extends Serializable> extends JpaRepository<E, I> {
-    E findById(I id);
-    List<E> findAll();
 }

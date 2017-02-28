@@ -4,6 +4,7 @@ package com.dani.blog.base.service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 
+import javax.inject.Inject;
 import java.lang.reflect.ParameterizedType;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -18,6 +19,7 @@ public class ModelMapperTransformer<E, D> implements Transformer<E, D> {
     protected final Class<E> entityClazz;
     protected final Class<D> dtoClazz;
 
+    @Inject
     public ModelMapperTransformer(ModelMapper mapper) {
         checkNotNull(mapper);
 
