@@ -1,13 +1,11 @@
 package com.dani.blog.domain.comment;
 
-import com.dani.blog.base.service.BaseService;
+import com.dani.blog.base.service.BaseCrudService;
 import com.dani.blog.data.CommentRepository;
 import com.dani.blog.domain.Comment;
 import com.dani.blog.domain.Post;
 import com.dani.blog.domain.comment.request.CreateCommentRequest;
-import com.dani.blog.domain.post.PostEntity;
 import com.dani.blog.domain.post.PostService;
-import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @Service
 @Transactional
-public class CommentService extends BaseService<CommentEntity, Comment, Long> {
+public class CommentService extends BaseCrudService<CommentEntity, Comment, Long> {
     private final PostService postService;
 
     @Inject

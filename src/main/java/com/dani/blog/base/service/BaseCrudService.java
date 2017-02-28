@@ -10,16 +10,16 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Base implementation for {@link Service}
+ * Base implementation for {@link CrudService}
  * @param <E> Entity
  * @param <D> DTO
  * @param <I> Identifier
  */
-public class BaseService<E, D, I extends Serializable> implements Service<E, D, I> {
+public class BaseCrudService<E, D, I extends Serializable> implements CrudService<E, D, I> {
     protected final Transformer<E, D> transformer;
     protected final CrudRepository<E, I> repository;
 
-    public BaseService(CrudRepository<E, I> repository, Transformer<E, D> transformer) {
+    public BaseCrudService(CrudRepository<E, I> repository, Transformer<E, D> transformer) {
         checkNotNull(repository);
         checkNotNull(transformer);
 

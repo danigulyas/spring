@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author dani
  */
-public class BaseServiceTest {
+public class BaseCrudServiceTest {
     private CrudRepository<TestEntity, Long> repository;
     private TestTransformer transformer;
     private TestService service;
