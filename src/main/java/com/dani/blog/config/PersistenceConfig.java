@@ -4,6 +4,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -11,6 +13,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -37,8 +40,12 @@ import javax.sql.DataSource;
  * @author dani
  */
 @Configuration
+@PropertySource("classpath:/persistence.properties")
 @EnableJpaRepositories(basePackages = "com.dani.blog.data")
 public class PersistenceConfig {
+
+    @Inject
+    protected Environment env;
 
     /**
      * Data source, manages pooling of connections, creds, etc.
@@ -48,10 +55,10 @@ public class PersistenceConfig {
     public DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
 
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/blog_spring");
-        ds.setUsername("root");
-        ds.setPassword("toor");
+        ds.setDriverClassName(env.getRequiredProperty("data_source.driver_class_name"));
+        ds.setUrl(env.getRequiredProperty("data_source.url"));
+        ds.setUsername(env.getRequiredProperty("data_source.username"));
+        ds.setPassword(env.getRequiredProperty("data_source.password"));
 
         return ds;
     }
@@ -64,10 +71,10 @@ public class PersistenceConfig {
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
 
-        adapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect"); // Dialect.
+        adapter.setDatabasePlatform(env.getProperty("adapter.dialect_class")); // Dialect.
         adapter.setDatabase(Database.MYSQL); // Database.
-        adapter.setGenerateDdl(true); // Auto-generate database schema.
-        adapter.setShowSql(true); // Print SQL to the command line.
+        adapter.setGenerateDdl(Boolean.valueOf(env.getProperty("adapter.genereate_ddl"))); // Auto-generate database schema.
+        adapter.setShowSql(Boolean.valueOf(env.getProperty("adapter.show_sql"))); // Print SQL to the command line.
 
         return adapter;
     }
