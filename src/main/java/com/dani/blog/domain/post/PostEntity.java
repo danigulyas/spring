@@ -11,14 +11,14 @@ import javax.validation.constraints.Size;
 /**
  * @author dani
  */
-@Entity
+@Entity(name = "Post")
 @Data
 @Getter
 @NoArgsConstructor
 public class PostEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

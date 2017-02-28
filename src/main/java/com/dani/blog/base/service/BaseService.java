@@ -1,7 +1,6 @@
 package com.dani.blog.base.service;
 
-import com.dani.blog.base.data.DAO;
-import javassist.NotFoundException;
+import com.dani.blog.base.data.CrudRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.io.Serializable;
@@ -18,9 +17,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class BaseService<E, D, I extends Serializable> implements Service<E, D, I> {
     protected final Transformer<E, D> transformer;
-    protected final DAO<E, I> repository;
+    protected final CrudRepository<E, I> repository;
 
-    public BaseService(DAO<E, I> repository, Transformer<E, D> transformer) {
+    public BaseService(CrudRepository<E, I> repository, Transformer<E, D> transformer) {
         checkNotNull(repository);
         checkNotNull(transformer);
 

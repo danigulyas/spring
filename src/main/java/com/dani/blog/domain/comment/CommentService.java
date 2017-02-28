@@ -9,6 +9,7 @@ import com.dani.blog.domain.post.PostEntity;
 import com.dani.blog.domain.post.PostService;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author dani
  */
 @Service
+@Transactional
 public class CommentService extends BaseService<CommentEntity, Comment, Long> {
     private final PostService postService;
 
@@ -51,14 +53,16 @@ public class CommentService extends BaseService<CommentEntity, Comment, Long> {
         Post post = getPostById(id);
 
         return getRepository()
-                .findAllByPostId(post.getId())
+                .readAllByPostId(post.getId())
                 .stream()
                 .map(transformer::fromEntity)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Comment findByIdAndPostId(long id, long postId) {
-        Comment comment = transformer.fromEntity(repository.findById(id));
+        CommentEntity entity = repository.findById(id);
+        Comment comment = transformer.fromEntity(entity);
 
         if(comment == null)
             throw new IllegalStateException("Comment with id #" + id + " not found.");

@@ -13,12 +13,12 @@ import javax.validation.constraints.Size;
 /**
  * @author dani
  */
-@Entity
+@Entity(name = "Comment")
 @Data
 @NoArgsConstructor
 public class CommentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull

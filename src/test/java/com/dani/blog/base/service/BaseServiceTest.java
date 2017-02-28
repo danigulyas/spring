@@ -1,6 +1,6 @@
 package com.dani.blog.base.service;
 
-import com.dani.blog.base.data.DAO;
+import com.dani.blog.base.data.CrudRepository;
 import com.dani.blog.base.service.support.TestDto;
 import com.dani.blog.base.service.support.TestEntity;
 import com.dani.blog.base.service.support.TestService;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
  * @author dani
  */
 public class BaseServiceTest {
-    private DAO<TestEntity, Long> repository;
+    private CrudRepository<TestEntity, Long> repository;
     private TestTransformer transformer;
     private TestService service;
 
@@ -90,7 +90,7 @@ public class BaseServiceTest {
         verify(repository, times(1)).delete(idToBeDeleted);
     }
 
-    protected DAO<TestEntity, Long> getMockRepository() {
-        return mock(DAO.class);
+    protected CrudRepository<TestEntity, Long> getMockRepository() {
+        return mock(CrudRepository.class);
     }
 }
